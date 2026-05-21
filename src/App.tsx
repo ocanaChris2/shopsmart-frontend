@@ -19,6 +19,7 @@ import { queryClient }     from '@/services/queryClient';
 
 const LandingPage     = lazy(() => import('@/pages/LandingPage'));
 const LoginPage       = lazy(() => import('@/pages/LoginPage'));
+const SignUpPage      = lazy(() => import('@/pages/SignUpPage'));
 const DashboardLayout = lazy(() => import('@/pages/DashboardLayout'));
 const DashboardHome   = lazy(() => import('@/pages/DashboardHome'));
 const EntityPage      = lazy(() => import('@/pages/EntityPage'));
@@ -43,8 +44,9 @@ export default function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public routes */}
-              <Route path="/"      element={<LandingPage />} />
-              <Route path="/login" element={<LoginPage />} />
+              <Route path="/"       element={<LandingPage />} />
+              <Route path="/login"  element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
 
               {/* Protected: every /dashboard/* route requires a valid JWT */}
               <Route element={<ProtectedRoute />}>

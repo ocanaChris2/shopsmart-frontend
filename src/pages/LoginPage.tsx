@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useForm }          from 'react-hook-form';
 import { zodResolver }      from '@hookform/resolvers/zod';
 import { z }                from 'zod';
@@ -145,6 +145,16 @@ export default function LoginPage() {
           >
             {showTenant ? 'Hide workspace selector' : 'Sign in to a specific workspace'}
           </button>
+
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            Don&apos;t have an account?{' '}
+            <Link
+              to="/signup"
+              className="font-medium text-foreground underline underline-offset-4 hover:text-primary transition-colors"
+            >
+              Sign up
+            </Link>
+          </p>
         </div>
       </div>
     </div>

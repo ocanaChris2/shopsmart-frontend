@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils';
 
 interface Feature { number: string; icon: LucideIcon; title: string; body: string }
 interface Step    { number: string; title: string; body: string }
-interface Plan    { name: string; price: number | null; period: string; tagline: string; features: string[]; cta: string; highlight: boolean }
+interface Plan    { name: string; price: number | null; period: string; tagline: string; features: string[]; cta: string; ctaHref: string; highlight: boolean }
 
 // ── Static data ───────────────────────────────────────────────────────────────
 
@@ -35,17 +35,17 @@ const PLANS: Plan[] = [
   {
     name: 'Starter', price: 0, period: 'forever', tagline: 'For small teams getting started',
     features: ['Up to 3 entities', '1 workspace', '2 users', 'Community support', 'API access'],
-    cta: 'Get started free', highlight: false,
+    cta: 'Get started free', ctaHref: '/signup', highlight: false,
   },
   {
     name: 'Growth', price: 49, period: 'per month', tagline: 'For growing operations',
     features: ['Unlimited entities', '3 workspaces', '15 users', 'Email support', 'API access', 'Custom roles'],
-    cta: 'Start free trial', highlight: true,
+    cta: 'Start free trial', ctaHref: '/signup', highlight: true,
   },
   {
     name: 'Enterprise', price: null, period: 'custom pricing', tagline: 'For large-scale deployments',
     features: ['Unlimited everything', 'Unlimited workspaces', 'SSO / SAML', 'Dedicated support', 'SLA guarantee', 'On-premise option'],
-    cta: 'Contact sales', highlight: false,
+    cta: 'Contact sales', ctaHref: '/login', highlight: false,
   },
 ];
 
@@ -86,15 +86,15 @@ function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-3">
           <Link to="/login" className="text-sm text-slate-400 hover:text-white transition-colors">
             Sign in
           </Link>
           <Link
-            to="/login"
+            to="/signup"
             className="rounded-md bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 text-sm font-medium text-white transition-colors"
           >
-            Get started
+            Sign up
           </Link>
         </div>
 
@@ -120,9 +120,8 @@ function Navbar() {
               {label}
             </a>
           ))}
-          <Link to="/login" className="block text-sm text-white font-medium pt-2">
-            Sign in →
-          </Link>
+          <Link to="/login"  className="block text-sm text-slate-300 hover:text-white transition-colors">Sign in</Link>
+          <Link to="/signup" className="block text-sm text-white font-semibold">Sign up →</Link>
         </div>
       )}
     </header>
@@ -226,7 +225,7 @@ function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
-              to="/login"
+              to="/signup"
               className="inline-flex items-center gap-2 rounded-md bg-indigo-600 hover:bg-indigo-500 px-5 py-2.5 text-sm font-medium text-white transition-colors"
             >
               Get started free <ArrowRight className="h-4 w-4" />
@@ -353,7 +352,7 @@ function Pricing() {
         </p>
 
         <div className="grid md:grid-cols-3 gap-6 items-start">
-          {PLANS.map(({ name, price, period, tagline, features, cta, highlight }) => (
+          {PLANS.map(({ name, price, period, tagline, features, cta, ctaHref, highlight }) => (
             <div
               key={name}
               className={cn(
@@ -393,7 +392,7 @@ function Pricing() {
 
               {/* CTA */}
               <Link
-                to="/login"
+                to={ctaHref}
                 className={cn(
                   'block w-full rounded-md py-2 text-center text-sm font-medium transition-colors mb-6',
                   highlight

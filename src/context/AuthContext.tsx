@@ -29,9 +29,17 @@ export interface LoginCredentials {
   tenant_slug?: string;
 }
 
+export interface RegisterCredentials {
+  display_name: string;
+  email:        string;
+  password:     string;
+  tenant_name?: string;
+}
+
 interface AuthContextValue extends AuthState {
-  login:  (creds: LoginCredentials) => Promise<void>;
-  logout: () => void;
+  login:    (creds: LoginCredentials)    => Promise<void>;
+  register: (creds: RegisterCredentials) => Promise<void>;
+  logout:   () => void;
 }
 
 // ── Reducer ───────────────────────────────────────────────────────────────────
@@ -144,13 +152,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'LOGIN_SUCCESS', user: data.user, tenant: data.tenant, token: data.token });
   }, []);
 
+  const register = useCallback(async (creds: RegisterCredentials): Promise<void> => {
+    const { data } = await apiClient.post<{
+      token:  string;
+      user:   AuthUser;
+      tenant: AuthTenant;
+    }>('/auth/register', creds);
+    tokenStorage.set(data.token);
+    dispatch({ type: 'LOGIN_SUCCESS', user: data.user, tenant: data.tenant, token: data.token });
+  }, []);
+
   const logout = useCallback((): void => {
     tokenStorage.remove();
     dispatch({ type: 'LOGOUT' });
   }, []);
 
   return (
-    <AuthContext.Provider value={{ ...state, login, logout }}>
+    <AuthContext.Provider value={{ ...state, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
