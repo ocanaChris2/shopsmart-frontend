@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { DynamicDataView } from '@/modules/dynamic/components/DynamicDataView';
 

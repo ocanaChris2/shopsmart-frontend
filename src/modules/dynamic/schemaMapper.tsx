@@ -174,7 +174,7 @@ function EmailField({ field, formField, disabled }: FormRendererProps) {
   );
 }
 
-function UrlField({ field, formField, disabled }: FormRendererProps) {
+function UrlField({ formField, disabled }: FormRendererProps) {
   return (
     <Input
       {...formField}
