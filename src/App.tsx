@@ -20,6 +20,7 @@ import { queryClient }     from '@/services/queryClient';
 const LandingPage     = lazy(() => import('@/pages/LandingPage'));
 const LoginPage       = lazy(() => import('@/pages/LoginPage'));
 const DashboardLayout = lazy(() => import('@/pages/DashboardLayout'));
+const DashboardHome   = lazy(() => import('@/pages/DashboardHome'));
 const EntityPage      = lazy(() => import('@/pages/EntityPage'));
 
 // ── Shared suspense fallback ──────────────────────────────────────────────────
@@ -57,12 +58,8 @@ export default function App() {
                   */}
                   <Route path=":entitySlug" element={<EntityPage />} />
 
-                  {/* Default: redirect to the first entity (user sees the sidebar) */}
-                  <Route index element={
-                    <div className="flex h-64 items-center justify-center text-muted-foreground">
-                      Select a module from the sidebar to get started.
-                    </div>
-                  } />
+                  {/* Default: dashboard overview */}
+                  <Route index element={<DashboardHome />} />
                 </Route>
               </Route>
 
