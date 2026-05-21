@@ -17,9 +17,10 @@ import { queryClient }     from '@/services/queryClient';
 // Each lazy import becomes its own chunk in the Vite build.
 // The user only downloads the code for pages they actually visit.
 
-const LoginPage      = lazy(() => import('@/pages/LoginPage'));
+const LandingPage     = lazy(() => import('@/pages/LandingPage'));
+const LoginPage       = lazy(() => import('@/pages/LoginPage'));
 const DashboardLayout = lazy(() => import('@/pages/DashboardLayout'));
-const EntityPage     = lazy(() => import('@/pages/EntityPage'));
+const EntityPage      = lazy(() => import('@/pages/EntityPage'));
 
 // ── Shared suspense fallback ──────────────────────────────────────────────────
 
@@ -41,6 +42,7 @@ export default function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public routes */}
+              <Route path="/"      element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
 
               {/* Protected: every /dashboard/* route requires a valid JWT */}
