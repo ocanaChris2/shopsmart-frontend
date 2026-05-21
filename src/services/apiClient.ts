@@ -75,7 +75,11 @@ export function isApiError(err: unknown): err is AxiosError<ApiErrorBody> {
 
 export function getErrorMessage(err: unknown, fallback = 'An unexpected error occurred.'): string {
   if (isApiError(err)) {
-    return err.response?.data?.error?.message ?? err.message ?? fallback;
+    // No response → CORS block or backend unreachable
+    if (!err.response) {
+      return 'Cannot reach the server. Check your connection or contact support.';
+    }
+    return err.response.data?.error?.message ?? err.message ?? fallback;
   }
   if (err instanceof Error) return err.message;
   return fallback;
